@@ -1,0 +1,6 @@
+__*/
+.*/
+logs/
+*.exe
+*.log
+config.py

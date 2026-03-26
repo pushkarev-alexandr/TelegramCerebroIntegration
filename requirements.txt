@@ -1,0 +1,2 @@
+python-telegram-bot[socks]
+-e Z:/scripts/site-packages/cerebro-api

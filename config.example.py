@@ -1,0 +1,5 @@
+TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+PROXY_URL = "socks5://127.0.0.1:10808"
+CEREBRO_USER = "your_login@example.com"
+CEREBRO_PASSWORD = "your_password"
+TELEGRAM_CHAT_IDS: list[int] = [123456789]
