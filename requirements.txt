@@ -1,2 +1,3 @@
 python-telegram-bot[socks]
+python-dotenv
 -e Z:/scripts/site-packages/cerebro-api

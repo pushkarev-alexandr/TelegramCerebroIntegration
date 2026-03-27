@@ -4,3 +4,5 @@ logs/
 *.exe
 *.log
 config.py
+.env
+!.env.example

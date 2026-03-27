@@ -1,7 +1,13 @@
 from cerebro.core import root_tasks, task_children
 from cerebro.aclasses import Task
+from dotenv import load_dotenv
 from pycerebro import database
-from config import CEREBRO_USER, CEREBRO_PASSWORD
+import os
+
+load_dotenv()
+
+CEREBRO_LOGIN = os.getenv("CEREBRO_LOGIN")
+CEREBRO_PASSWORD = os.getenv("CEREBRO_PASSWORD")
 
 class Database(database.Database):
     def __init__(self):
@@ -9,7 +15,9 @@ class Database(database.Database):
         self.connection_error_message = None
         if self.connect_from_cerebro_client() != self.CLIENT_CONNECTED:
             try:
-                self.connect(CEREBRO_USER, CEREBRO_PASSWORD)
+                if not CEREBRO_LOGIN or not CEREBRO_PASSWORD:
+                    raise ValueError("CEREBRO_LOGIN or CEREBRO_PASSWORD is not set in .env")
+                self.connect(CEREBRO_LOGIN, CEREBRO_PASSWORD)
             except Exception as e:
                 self.connection_error_message = e
 
