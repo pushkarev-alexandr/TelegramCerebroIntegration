@@ -1,8 +1,8 @@
 import logging
 from pathlib import Path
 
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram import BotCommand, Update
+from telegram.ext import Application, ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
 from config import PROXY_URL, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_IDS
 from create_task import create_task
@@ -30,6 +30,14 @@ async def reply_no_access(update: Update) -> None:
         chat_id = update.effective_chat.id if update.effective_chat else None
         logger.warning("Access denied for chat_id=%s", chat_id)
         await update.message.reply_text("У вас нет доступа к этому боту.")
+
+
+async def post_init(application: Application) -> None:
+    await application.bot.set_my_commands(
+        [
+            BotCommand("start", "Инструкция по созданию задачи"),
+        ]
+    )
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -96,6 +104,7 @@ def main() -> None:
         .token(TELEGRAM_BOT_TOKEN)
         .proxy(PROXY_URL)
         .get_updates_proxy(PROXY_URL)
+        .post_init(post_init)
         .build()
     )
     app.add_handler(CommandHandler("start", start_command))
